@@ -3,7 +3,7 @@ package com.example.saltanat.actorkotlin
 import android.os.Parcel
 import android.os.Parcelable
 
-class Actor : Parcelable {
+class  Actor : Parcelable {
     var name: String? = null
     var film: String? = null
 

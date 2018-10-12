@@ -41,7 +41,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="10dp"
         android:backgroundTint="@android:color/white"
-        android:text="hola@you.com"
+        android:hint="hola@you.com"
         android:textColor="@android:color/white"/>
 
     <EditText
@@ -53,7 +53,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="20dp"
         android:backgroundTint="@android:color/white"
-        android:text="Password"
+        android:hint="Password"
         android:textColor="@android:color/darker_gray"/>
 
     <Button
@@ -80,8 +80,4 @@
         android:textColor="@android:color/white"
         android:textAlignment="center"
         />
-
-
-
-
 </android.support.constraint.ConstraintLayout>
