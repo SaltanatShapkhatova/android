@@ -25,17 +25,20 @@ class MainActivity : AppCompatActivity(), NewsItemClicked {
     var list: ArrayList<News> = ArrayList()
     lateinit var adapter : NewsAdapter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = NewsAdapter (this, list, this)
+        adapter = NewsAdapter (this, list, this)
+        rv.adapter = adapter
 
         database.newsDao().getAllNews().subscribe {
-            list = it as ArrayList<News>
-            adapter.notifyDataSetChanged()
+            runOnUiThread {
+                list.clear()
+                list.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
         }
 
         fab.setOnClickListener {

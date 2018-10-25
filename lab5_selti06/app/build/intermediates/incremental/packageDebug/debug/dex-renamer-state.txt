@@ -1,0 +1,4 @@
+#Thu Oct 25 21:54:19 BDT 2018
+base.0=D\:\\maint-gitlab\\raptor\\lab5_selti06\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex
