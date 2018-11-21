@@ -1,10 +1,29 @@
 {
-  "news": [
+  "pizzas": [
     {
-      "id": 1,
-      "title": "Facebook blablablaaaa",
-      "body": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-      "date": "25-10-2018"      
+      "title": "Margarita",
+      "composition": "Tomato, cheese",
+      "amount": 0      
+    },
+	{
+      "title": "Pepperoni",
+      "composition": "Salami, cheese",
+      "amount": 0
+    },
+    {
+      "title": "Caesar",
+      "composition": "Chicken, salat, cheese",
+      "amount": 0
+    },
+    {
+      "title": "6 cheeses",
+      "composition": "parmezan, mozarella",
+      "amount": 0
+    },
+    {
+      "title": "4 seasons",
+      "composition": "mised meat, cheese,pepper,chicken,tomato",
+      "amount": 0
     }
   ],
   "profile": {
