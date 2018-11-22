@@ -46,6 +46,8 @@
                     android:layout_height="wrap_content"
                     android:text="Lorem Ipsum"
                     android:textSize="14sp"
+                    android:maxLines="3"
+                    android:maxWidth="100dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
                     app:layout_constraintLeft_toRightOf="@id/iv"

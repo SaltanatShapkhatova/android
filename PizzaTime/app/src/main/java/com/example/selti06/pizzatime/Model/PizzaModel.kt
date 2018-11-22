@@ -37,8 +37,7 @@ data class Post(
     @SerializedName("name") var name: String?,
     @SerializedName("id") var id: Int?,
     @SerializedName("amount") var amount: Int? = null,
-    @SerializedName("title") var title: String?,
-    @SerializedName("composition") var composition: String?
+    @SerializedName("title") var title: String?
 )
 
 interface ApiEndpoint {
@@ -56,8 +55,7 @@ interface ApiEndpoint {
                    @Field("name") name: String,
                    @Field("id") id: Int,
                    @Field("amount") amount: Int,
-                   @Field("title") title: String,
-                   @Field("composition") composition: String): Call<Post>
+                   @Field("title") title: String): Call<Post>
 
     @POST("posts/")
     fun createPost(@Body post: Post): Call<Post>

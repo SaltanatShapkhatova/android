@@ -33,20 +33,12 @@ import kotlinx.android.synthetic.main.activity_main.*
          recyclerView.adapter = items.let { PizzaAdapter(it, this) }
      }
 
-     fun onClick(){
-
-     }
-
      override fun getItems(): List<Pizza> {
          return db?.pizzaDao()!!.getAllPizzas()
      }
 
      fun onClickAdd(view: View) {
-         /*var intent = Intent(this, AddPizzaActivity::class.java)
-         startActivity(intent)*/
          var intent = Intent(this, ShowCartActivity::class.java)
          startActivity(intent)
      }
-
-
  }

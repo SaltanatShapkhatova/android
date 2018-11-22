@@ -59,20 +59,38 @@ class PizzaAdapter (val items : List<Pizza>, val context : Context) :
                 .connectTimeout(60, TimeUnit.SECONDS)
             okHttpClient.addInterceptor(interceptor)
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl("https://jsonplaceholder.typicode.com/SaltanatShapkhatova/android/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient.build())
                 .build()
             val apiEndpoint = retrofit.create(ApiEndpoint::class.java)
-            val post = Post(283325, "Saltanat",items.get(position).id,items.get(position).amount,
-                items.get(position).title, items.get(position).composition)
+            //val post = Post(283325, "Saltanat",items.get(position).id,items.get(position).amount,
+             //   items.get(position).title, items.get(position).composition)
+            val post = Post(283325, "Saltanat",0,2,
+                "Margarita")
+
             val call = apiEndpoint.createPost(post)
             call.enqueue(object : Callback<Post> {
                 override fun onResponse(call: Call<Post>?, response: Response<Post>?) {
                     val post = response?.body()
                     Log.d("Post: ", post.toString())
+
                 }
                 override fun onFailure(call: Call<Post>?, t: Throwable?) {
+                    Log.e("Error: ", t?.message)
+                }
+            })
+            val callGet = apiEndpoint.getPizzas()
+
+            callGet.enqueue(object : Callback<List<Pizza>> {
+
+                override fun onResponse(call: Call<List<Pizza>>?, response: Response<List<Pizza>>?) {
+                    val todos = response?.body()
+                    Log.d("Todos: ", todos!![0].toString())
+                    Log.d("Todos Size: ", todos.size.toString())
+                }
+
+                override fun onFailure(call: Call<List<Pizza>>?, t: Throwable?) {
                     Log.e("Error: ", t?.message)
                 }
             })
