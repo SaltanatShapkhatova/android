@@ -1,6 +1,8 @@
 package com.example.selti06.pizzatime
 
 import android.content.Context
+import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.util.Log
@@ -11,6 +13,9 @@ import com.example.selti06.pizzatime.Model.ApiEndpoint
 import com.example.selti06.pizzatime.Model.Pizza
 import com.example.selti06.pizzatime.Model.Post
 import com.google.gson.GsonBuilder
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.pizza_item.view.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,6 +29,7 @@ import java.util.concurrent.TimeUnit
 class PizzaAdapter (val items : List<Pizza>, val context : Context) :
     RecyclerView.Adapter<ViewHolder>()  {
     var cnt : Int = 0
+    var posts : List<Pizza> = emptyList<Pizza>()
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(context)
@@ -35,8 +41,6 @@ class PizzaAdapter (val items : List<Pizza>, val context : Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-            holder?.tvTitle?.text = items.get(position).title
-            holder?.tvComposition?.text = items.get(position).composition
 
         items.get(position).amount = 0
         holder?.plus!!.setOnClickListener(){
@@ -51,49 +55,14 @@ class PizzaAdapter (val items : List<Pizza>, val context : Context) :
             holder?.etAmount?.text = cnt.toString()
         }
         holder?.tvAdd.setOnClickListener(){
-            val gson = GsonBuilder().create()
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
-            val okHttpClient = OkHttpClient.Builder()
-                .readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS)
-            okHttpClient.addInterceptor(interceptor)
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/SaltanatShapkhatova/android/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(okHttpClient.build())
-                .build()
-            val apiEndpoint = retrofit.create(ApiEndpoint::class.java)
-            //val post = Post(283325, "Saltanat",items.get(position).id,items.get(position).amount,
-             //   items.get(position).title, items.get(position).composition)
-            val post = Post(283325, "Saltanat",0,2,
-                "Margarita")
+            val titlePost : String = items.get(position).title
+            val amountPost : Int = items.get(position).amount
+            val compositionPost : String = items.get(position).composition
+            Single.fromCallable{
+                MainActivity.db?.orderDao()?.insert(Pizza(titlePost, compositionPost,amountPost))
+            }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+            //posts+=listOf(Pizza(titlePost, compositionPost,amountPost))
 
-            val call = apiEndpoint.createPost(post)
-            call.enqueue(object : Callback<Post> {
-                override fun onResponse(call: Call<Post>?, response: Response<Post>?) {
-                    val post = response?.body()
-                    Log.d("Post: ", post.toString())
-
-                }
-                override fun onFailure(call: Call<Post>?, t: Throwable?) {
-                    Log.e("Error: ", t?.message)
-                }
-            })
-            val callGet = apiEndpoint.getPizzas()
-
-            callGet.enqueue(object : Callback<List<Pizza>> {
-
-                override fun onResponse(call: Call<List<Pizza>>?, response: Response<List<Pizza>>?) {
-                    val todos = response?.body()
-                    Log.d("Todos: ", todos!![0].toString())
-                    Log.d("Todos Size: ", todos.size.toString())
-                }
-
-                override fun onFailure(call: Call<List<Pizza>>?, t: Throwable?) {
-                    Log.e("Error: ", t?.message)
-                }
-            })
         }
     }
 }

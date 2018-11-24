@@ -19,6 +19,27 @@ data class Pizza(
     var id: Int = 0
 }
 
+@Entity(tableName = "orders")
+data class Order(
+    @ColumnInfo(name = "title")
+    var title: String,
+    @ColumnInfo(name = "composition")
+    var composition: String,
+    @ColumnInfo(name = "amount")
+    var amount: Int
+){
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+}
+
+@Dao
+interface OrderDao {
+    @Query("Select * from orders")
+    fun getAllOrders() : List<Pizza>
+    @Insert
+    fun insert (pizza: Pizza)
+}
+
 @Dao
 interface PizzaDao {
     @Query("Select * from pizzas")
@@ -30,6 +51,7 @@ interface PizzaDao {
 @Database(entities = arrayOf(Pizza::class), version = 4)
 abstract class PizzaDb : RoomDatabase(){
     abstract fun pizzaDao() : PizzaDao
+    abstract fun orderDao() : OrderDao
 }
 
 data class Post(
@@ -37,7 +59,8 @@ data class Post(
     @SerializedName("name") var name: String?,
     @SerializedName("id") var id: Int?,
     @SerializedName("amount") var amount: Int? = null,
-    @SerializedName("title") var title: String?
+    @SerializedName("title") var title: String?,
+    @SerializedName("composition") var composition: String?
 )
 
 interface ApiEndpoint {
