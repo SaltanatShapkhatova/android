@@ -1,9 +1,9 @@
 package com.example.selti06.pizzatime
 
-import com.example.selti06.pizzatime.Model.Pizza
+import com.example.selti06.pizzatime.Model.Order
 
 interface ShowCartView {
     fun onResume()
-    fun setItems(users : List<Pizza>)
-    fun getItems() : List<Pizza>
+    fun setItems(users : List<Order>)
+    fun getItems() : List<Order>
 }

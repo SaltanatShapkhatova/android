@@ -1,5 +1,6 @@
 package com.example.selti06.pizzatime
 
+import com.example.selti06.pizzatime.Model.Order
 import com.example.selti06.pizzatime.Model.Pizza
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -12,7 +13,7 @@ class ShowCartPresenter {
     }
     fun onResume() {
         Single.fromCallable{
-            var items : List<Pizza> = showCartView!!.getItems()
+            var items : List<Order> = showCartView!!.getItems()
             showCartView?.setItems(items)
         }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
     }

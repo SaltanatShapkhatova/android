@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.selti06.pizzatime.Model.ApiEndpoint
+import com.example.selti06.pizzatime.Model.Order
 import com.example.selti06.pizzatime.Model.Pizza
 import com.example.selti06.pizzatime.Model.Post
 import com.google.gson.GsonBuilder
@@ -59,10 +60,9 @@ class PizzaAdapter (val items : List<Pizza>, val context : Context) :
             val amountPost : Int = items.get(position).amount
             val compositionPost : String = items.get(position).composition
             Single.fromCallable{
-                MainActivity.db?.orderDao()?.insert(Pizza(titlePost, compositionPost,amountPost))
+                MainActivity.db?.orderDao()?.insert(Order(titlePost, compositionPost,amountPost))
             }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
             //posts+=listOf(Pizza(titlePost, compositionPost,amountPost))
-
         }
     }
 }

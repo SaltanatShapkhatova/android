@@ -35,9 +35,9 @@ data class Order(
 @Dao
 interface OrderDao {
     @Query("Select * from orders")
-    fun getAllOrders() : List<Pizza>
+    fun getAllOrders() : List<Order>
     @Insert
-    fun insert (pizza: Pizza)
+    fun insert (order: Order)
 }
 
 @Dao
@@ -48,7 +48,7 @@ interface PizzaDao {
     fun insert (pizza: Pizza)
 }
 
-@Database(entities = arrayOf(Pizza::class), version = 4)
+@Database(entities = arrayOf(Pizza::class, Order::class), version = 5)
 abstract class PizzaDb : RoomDatabase(){
     abstract fun pizzaDao() : PizzaDao
     abstract fun orderDao() : OrderDao
