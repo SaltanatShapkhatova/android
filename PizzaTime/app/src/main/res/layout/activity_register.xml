@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".RegisterActivity"
+        android:background="@color/colorPrimary"
+        app:layout_constraintVertical_chainStyle="packed">
+
+    <TextView
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/logoTxt"
+            android:text="Pizza Time"
+            android:textAlignment="center"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="70dp"
+            android:textColor="@android:color/white"
+            android:textSize="50dp"/>
+
+
+    <EditText
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/emailEdtTxt"
+            app:layout_constraintTop_toBottomOf="@+id/logoTxt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="hola@you.com"
+            android:textColor="@android:color/white"/>
+
+    <EditText
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/passEdtTxt"
+            app:layout_constraintTop_toBottomOf="@+id/emailEdtTxt"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="Password"
+            android:textColor="@android:color/darker_gray"/>
+
+    <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkboxRegister"
+            app:layout_constraintTop_toBottomOf="@id/passEdtTxt"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="@string/passwordShow"
+            android:textColor="@android:color/white"
+    />
+
+    <EditText
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/etName"
+            app:layout_constraintTop_toBottomOf="@+id/checkboxRegister"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:backgroundTint="@android:color/white"
+            android:hint="Name"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp"/>
+
+
+    <EditText
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/etSurname"
+            app:layout_constraintTop_toBottomOf="@+id/etName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@android:color/white"
+            android:hint="Surname"
+            android:textColor="@android:color/white"/>
+
+    <Button
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/bnRegister"
+            app:layout_constraintTop_toBottomOf="@+id/etSurname"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:text="Register"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimaryDark"
+            android:textSize="15sp"/>
+
+</android.support.constraint.ConstraintLayout>

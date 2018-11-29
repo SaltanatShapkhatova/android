@@ -12,7 +12,7 @@ class MainPresenter {
     }
     fun onResume() {
         Single.fromCallable{
-            var items : List<Pizza> = mainView!!.getItems()
+            var items : ArrayList<Pizza> = mainView!!.getItems()
             mainView?.setItems(items)
         }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
     }

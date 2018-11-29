@@ -3,27 +3,32 @@
     {
       "title": "Margarita",
       "composition": "Tomato, cheese",
-      "amount": 0      
+      "amount": 0,
+	"price": 1000     
     },
 	{
       "title": "Pepperoni",
       "composition": "Salami, cheese",
-      "amount": 0
+      "amount": 0,
+"price": 1500
     },
     {
       "title": "Caesar",
       "composition": "Chicken, salat, cheese",
-      "amount": 0
+      "amount": 0,
+"price": 1300
     },
     {
       "title": "6 cheeses",
       "composition": "parmezan, mozarella",
-      "amount": 0
+      "amount": 0,
+"price": 1700
     },
     {
       "title": "4 seasons",
       "composition": "mised meat, cheese,pepper,chicken,tomato",
-      "amount": 0
+      "amount": 0,
+"price": 2000
     }
   ],
   "profile": {

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "722674977345",
+    "firebase_url": "https://pizzatime-53475.firebaseio.com",
+    "project_id": "pizzatime-53475",
+    "storage_bucket": "pizzatime-53475.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722674977345:android:8711524deffdf796",
+        "android_client_info": {
+          "package_name": "com.example.selti06.pizzatime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722674977345-e7jp0cv1e0pnbgdsiu2fag4jjidnh633.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.selti06.pizzatime",
+            "certificate_hash": "1e10ec0e94a6e264cdfcb0b40c11422bbe1024a8"
+          }
+        },
+        {
+          "client_id": "722674977345-qeflp2nptdhdnhg20ek0f8fqkvs2h60o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3xgT4slB-VJM2wzgQ75Z91a5bvlvDy2Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722674977345-qeflp2nptdhdnhg20ek0f8fqkvs2h60o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

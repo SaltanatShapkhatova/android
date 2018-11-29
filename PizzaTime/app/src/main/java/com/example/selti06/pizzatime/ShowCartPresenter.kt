@@ -1,7 +1,7 @@
 package com.example.selti06.pizzatime
 
 import com.example.selti06.pizzatime.Model.Order
-import com.example.selti06.pizzatime.Model.Pizza
+import com.example.selti06.pizzatime.ShowCartActivity.Companion.db
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -13,8 +13,14 @@ class ShowCartPresenter {
     }
     fun onResume() {
         Single.fromCallable{
-            var items : List<Order> = showCartView!!.getItems()
+            var items : ArrayList<Order> = showCartView!!.getItems()
             showCartView?.setItems(items)
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+    }
+
+    fun removeById(id: Int) {
+        Single.fromCallable{
+            db?.orderDao()?.deleteOrder(id)
         }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
 }

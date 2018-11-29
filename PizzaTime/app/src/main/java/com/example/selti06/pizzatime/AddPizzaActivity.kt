@@ -34,13 +34,13 @@ class AddPizzaActivity : AppCompatActivity(), AddPizzaView {
     }
 
     override fun add() {
-        /**Single.fromCallable{
+        Single.fromCallable{
             MainActivity.db?.pizzaDao()?.insert(Pizza(etTitle.text.toString(), etComposition.text.toString(), 0))
             var intent = Intent (this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()*/
-        val gson = GsonBuilder().create()
+        }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+        /**val gson = GsonBuilder().create()
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient.Builder()
@@ -48,7 +48,7 @@ class AddPizzaActivity : AppCompatActivity(), AddPizzaView {
             .connectTimeout(60, TimeUnit.SECONDS)
         okHttpClient.addInterceptor(interceptor)
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://my-json-server.typicode.com/SaltanatShapkhatova/android")
+            .baseUrl("https://my-json-server.typicode.com/SaltanatShapkhatova/android/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient.build())
             .build()
@@ -73,7 +73,7 @@ class AddPizzaActivity : AppCompatActivity(), AddPizzaView {
                 Log.e("Error with GET(): ", t?.message)
             }
 
-        })
+        })*/
         var intent = Intent (this, MainActivity::class.java)
         startActivity(intent)
     }

@@ -15,6 +15,19 @@
             android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
 
+    <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:id="@+id/tvTotalPrice"
+            android:textColor="@android:color/holo_green_dark"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerViewCart"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true" android:layout_marginBottom="109dp"
+            android:layout_toStartOf="@+id/btnOrder"
+            android:layout_toLeftOf="@+id/btnOrder"
+    />
+
     <Button
             android:id="@+id/btnOrder"
             android:onClick="onClickOrder"
@@ -27,7 +40,6 @@
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:src="@drawable/ic_shopping_cart_black_24dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
@@ -35,5 +47,22 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="29dp"
             android:layout_marginRight="17dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnMenu"
+            android:gravity="end|bottom"
+            android:backgroundTint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Back"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="20dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginEnd="17dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="29dp"
+            android:layout_marginRight="50dp"
+    />
 
 </RelativeLayout>

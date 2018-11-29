@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PizzaTime</string>
+    <string name="passwordShow">Show Password</string>
+    <string name="passwordHide">Hide Password</string>
 </resources>
