@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.example.selti06.pizzatime.Model.*
 import com.google.gson.GsonBuilder
 import io.reactivex.Single
@@ -22,7 +23,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : AppCompatActivity(), MainView, PizzaAdapter.OnCartAdded {
+
+     override fun onAdd(total: Int) {
+         tvTotalPrice.setText(total.toString())
+     }
 
      lateinit  var adapter : PizzaAdapter
      var list  = ArrayList<Pizza>()
@@ -39,9 +44,12 @@ class MainActivity : AppCompatActivity(), MainView {
              .allowMainThreadQueries()
              .build()
          recyclerView.layoutManager = LinearLayoutManager(this)
-         adapter = PizzaAdapter(list, this)
+         adapter = PizzaAdapter(list, this, this)
          recyclerView.adapter = adapter
 
+         tvLogOut.setOnClickListener {
+             mainPresenter.logout()
+         }
          val gson = GsonBuilder().create()
          val interceptor = HttpLoggingInterceptor()
          interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -58,26 +66,25 @@ class MainActivity : AppCompatActivity(), MainView {
          val call = apiEndpoint.getPizzas()
          val listPizzas  = db?.pizzaDao()?.getAllPizzas()
          call.enqueue(object : Callback<List<Pizza>> {
-
              override fun onResponse(call: Call<List<Pizza>>?, response: Response<List<Pizza>>?) {
-
                  for(i in response?.body()!!.size.toString()){
                      val title = response?.body()?.get(i.toInt())!!.title
                      val composition = response?.body()?.get(i.toInt())!!.composition
                      val amount = response?.body()?.get(i.toInt())!!.amount
-                     if(!listPizzas!!.contains(Pizza(title,composition,amount))){
+                     val price = response?.body()?.get(i.toInt())!!.price
+                     if(!listPizzas!!.contains(Pizza(title,composition,amount,price))){
                          Single.fromCallable{
-                             MainActivity.db?.pizzaDao()?.insert(Pizza(title, composition, amount))
+                             MainActivity.db?.pizzaDao()?.insert(Pizza(title, composition, amount, price))
                              finish()
                          }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
                      }
                  }
              }
-
              override fun onFailure(call: Call<List<Pizza>>?, t: Throwable?) {
                  Log.e("Error with GET(): ", t?.message)
              }
          })
+         adapter.notifyDataSetChanged()
      }
 
      override fun onResume() {
@@ -92,11 +99,20 @@ class MainActivity : AppCompatActivity(), MainView {
 
      override fun getItems(): ArrayList<Pizza> {
          return db?.pizzaDao()!!.getAllPizzas() as ArrayList<Pizza>
-
      }
+
+    override fun onLogoutSuccess() {
+        val intent = Intent (this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 
      fun onClickAdd(view: View) {
          val intent = Intent(this, ShowCartActivity::class.java)
+         intent.putExtra("total", tvTotalPrice.text.toString())
          startActivity(intent)
      }
  }

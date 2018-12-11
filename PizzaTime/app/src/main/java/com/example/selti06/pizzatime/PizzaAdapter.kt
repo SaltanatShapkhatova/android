@@ -13,10 +13,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.pizza_item.view.*
 
-class PizzaAdapter (val items : ArrayList<Pizza>, val context : Context) :
+class PizzaAdapter (val items : List<Pizza>, val context : Context, private val listenerAdded: OnCartAdded) :
     RecyclerView.Adapter<PizzaAdapter.ViewHolder>()  {
     var cnt : Int = 0
     var totalPrice:Int = 0
+
+    interface OnCartAdded {
+        fun onAdd (position: Int)
+    }
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(context)
@@ -31,29 +35,46 @@ class PizzaAdapter (val items : ArrayList<Pizza>, val context : Context) :
 
         holder?.tvTitle!!.text = items.get(position).title
         holder?.tvComposition!!.text = items.get(position).composition
-        items.get(position).amount = 0
+        holder?.tvPrice!!.text = items.get(position).price.toString()
         holder?.plus!!.setOnClickListener(){
+            cnt = items.get(position).amount
             cnt++
             items.get(position).amount = cnt
             holder?.etAmount?.text = cnt.toString()
         }
         holder?.minus!!.setOnClickListener(){
-            if(items.get(position).amount > 0)
+            if(items.get(position).amount > 0) {
+                cnt = items.get(position).amount
                 cnt--
-            items.get(position).amount = cnt
+                items.get(position).amount = cnt
+            }
             holder?.etAmount?.text = cnt.toString()
+        }
+        var contains : Boolean = false
+        var orders = MainActivity.db!!.orderDao().getAllOrders()
+        orders.forEach {
+            if(it.title == items.get(position).title){
+                contains = true
+            }
         }
         holder?.tvAdd.setOnClickListener(){
             Log.d("Add", "add pressed")
             val titlePost : String = items.get(position).title
             val amountPost : Int = items.get(position).amount
             val compositionPost : String = items.get(position).composition
-            if(amountPost!=0){
+            val pricePost:Int = items.get(position).price
+            if(amountPost!=0 && contains == false){
                 holder?.tvSelect.visibility = View.INVISIBLE
+                totalPrice += amountPost*pricePost
+                listenerAdded.onAdd(totalPrice)
                 Single.fromCallable{
-                    MainActivity.db?.orderDao()?.insert(Order(titlePost, compositionPost,amountPost))
+                    MainActivity.db?.orderDao()?.insert(Order(titlePost, compositionPost,amountPost, pricePost))
                 }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
+            }
+            else if(amountPost == 0){
+                holder?.tvSelect.visibility = View.VISIBLE
             }else{
+                holder?.tvSelect.setText("Already added")
                 holder?.tvSelect.visibility = View.VISIBLE
             }
          }

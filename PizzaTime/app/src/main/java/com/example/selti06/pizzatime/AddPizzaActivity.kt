@@ -35,7 +35,8 @@ class AddPizzaActivity : AppCompatActivity(), AddPizzaView {
 
     override fun add() {
         Single.fromCallable{
-            MainActivity.db?.pizzaDao()?.insert(Pizza(etTitle.text.toString(), etComposition.text.toString(), 0))
+            MainActivity.db?.pizzaDao()?.insert(Pizza(etTitle.text.toString(), etComposition.text.toString(), 0,
+                etPrice.text.toString().toInt()))
             var intent = Intent (this, MainActivity::class.java)
             startActivity(intent)
             finish()

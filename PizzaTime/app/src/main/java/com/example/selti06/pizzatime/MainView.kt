@@ -8,4 +8,6 @@ interface MainView {
     fun onResume()
     fun setItems(items : ArrayList<Pizza>)
     fun getItems() : ArrayList<Pizza>
+    fun onLogoutSuccess ()
+    fun showMessage(message: String)
 }

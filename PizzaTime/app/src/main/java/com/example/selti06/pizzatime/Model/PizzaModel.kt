@@ -81,7 +81,7 @@ interface PizzaDao {
     fun insert (pizza: Pizza)
 }
 
-@Database(entities = arrayOf(Pizza::class, Order::class, User::class), version = 6)
+@Database(entities = arrayOf(Pizza::class, Order::class, User::class), version = 7)
 abstract class PizzaDb : RoomDatabase(){
     abstract fun pizzaDao() : PizzaDao
     abstract fun orderDao() : OrderDao

@@ -14,6 +14,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_show_cart.*
+import kotlinx.android.synthetic.main.pizza_item.view.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -21,18 +22,37 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.temporal.TemporalAmount
 import java.util.concurrent.TimeUnit
 
-class ShowCartActivity : AppCompatActivity(), ShowCartView, CartAdapter.OnCartRemoved{
+class ShowCartActivity : AppCompatActivity(), ShowCartView, CartAdapter.OnCartRemoved,
+    CartAdapter.OnCartChanged, CartAdapter.OnCartChangedMinus{
 
     override fun onRemove(position: Int) {
+        Log.d("AMOUNT", list[position].amount.toString())
         showCartPresenter.removeById(list[position].id)
         list.removeAt(position)
         adapter.notifyItemRemoved(position)
+        calc()
+        Log.d("TOTALPRICE", totalInt.toString())
     }
 
+    override fun onChanged(price :Int) {
+
+        totalInt += price
+        tvTotalPrice.text = totalInt.toString()
+    }
+
+    override fun onChangedMinus(price :Int) {
+
+        totalInt -= price
+        tvTotalPrice.text = totalInt.toString()
+    }
+
+
     lateinit  var adapter : CartAdapter
-     var list  = ArrayList<Order>()
+    var list  = ArrayList<Order>()
+    var totalInt : Int = 0
 
     companion object {
         var db: PizzaDb? = null
@@ -53,10 +73,21 @@ class ShowCartActivity : AppCompatActivity(), ShowCartView, CartAdapter.OnCartRe
             startActivity(intent)
         }
 
-        adapter = CartAdapter(list, this, this)
+        adapter = CartAdapter(list, this, this,this, this)
         recyclerViewCart.adapter = adapter
-
     }
+
+    fun calc(){
+        list.forEach {
+            totalInt+=(it.amount*it.price)
+        }
+        if(totalInt == 0){
+            tvTotalPrice.setText("0")
+        }else{
+            tvTotalPrice.setText(totalInt.toString())
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         showCartPresenter.onResume()
@@ -70,6 +101,16 @@ class ShowCartActivity : AppCompatActivity(), ShowCartView, CartAdapter.OnCartRe
 
         list.addAll(arraylist)
         adapter.notifyDataSetChanged()
+        calc()
+    }
+
+    override fun onLogoutSuccess() {
+        val intent = Intent (this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun showMessage(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     fun onClickOrder(view: View) {
@@ -84,7 +125,7 @@ class ShowCartActivity : AppCompatActivity(), ShowCartView, CartAdapter.OnCartRe
         okHttpClient.addInterceptor(interceptor)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl(" http://127.0.0.1:8000/pizza_list/cart/")
+            .baseUrl("http://127.0.0.1:8000/pizza_list/cart/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(okHttpClient.build())
             .build()
@@ -108,10 +149,10 @@ class ShowCartActivity : AppCompatActivity(), ShowCartView, CartAdapter.OnCartRe
                     }
                 })
 
-                list.removeAt(it.id)
-               adapter.notifyItemRemoved(it.id)
+                /**list.removeAt(it.id)
+                adapter.notifyItemRemoved(it.id)
 
-                showCartPresenter.removeById(it.id)
+                showCartPresenter.removeById(it.id)*/
                 Toast.makeText(this,"Ordered succesfully", Toast.LENGTH_LONG).show()
             }
 

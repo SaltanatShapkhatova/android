@@ -6,4 +6,6 @@ interface ShowCartView {
     fun onResume()
     fun setItems(list : ArrayList<Order>)
     fun getItems() : ArrayList<Order>
+    fun onLogoutSuccess ()
+    fun showMessage(message: String)
 }
